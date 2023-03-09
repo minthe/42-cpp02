@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:53:27 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/03/09 11:04:57 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/03/09 11:48:16 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ class Fixed {
 		void	setRawBits(int const raw);
 
 		Fixed(); // canonical default constructor
+		Fixed(const int value); // parametric constructor
+		Fixed(const float value); // parametic constructor
 		Fixed(Fixed const & src); // canonical copy constructor
 		~Fixed(); // canonical deconstructor
 
