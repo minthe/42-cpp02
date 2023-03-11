@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:53:29 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/03/09 11:23:16 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/03/11 19:13:24 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Fixed::~Fixed()
 	std::cout << "Deconstructor called" << std::endl;
 }
 
-Fixed::Fixed(Fixed const & src)
+Fixed::Fixed(const Fixed& src)
 {
 	std::cout << "Copy constructor called" << std::endl;
 	*this = src;
@@ -31,7 +31,7 @@ Fixed::Fixed(Fixed const & src)
 	return;
 }
 
-Fixed &	Fixed::operator=(Fixed const & rhs)
+Fixed&	Fixed::operator=(const Fixed& rhs)
 {
 	std::cout << "Copy assigment operator called" << std::endl;
 	if (this != &rhs)
@@ -47,7 +47,7 @@ int		Fixed::getRawBits() const
 	return (this->_fixed_point);
 }
 
-void	Fixed::setRawBits(int const raw)
+void	Fixed::setRawBits(const int raw)
 {
 	std::cout << "setRawBits member function called" << std::endl;
 	this->_fixed_point = raw;
