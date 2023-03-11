@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:53:29 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/03/10 18:27:58 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/03/11 14:04:05 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include <cmath>
 #include "Fixed.class.hpp"
 
+
+// CONSTRUCTORS ************************************************ CONSTRUCTORS
+
+ 
 Fixed::Fixed() : _fixed_point(0)
 {
 	std::cout << "Default constructor called" << std::endl;
@@ -31,7 +35,7 @@ Fixed::Fixed(const float value)
 	std::cout << "Float constructor called" << std::endl;
 }
 
-Fixed::Fixed(Fixed const & src)
+Fixed::Fixed(const Fixed& src)
 {
 	*this = src;
 	std::cout << "Copy constructor called" << std::endl;
@@ -42,8 +46,7 @@ Fixed::~Fixed()
 	std::cout << "Deconstructor called" << std::endl;
 }
 
-
-Fixed &	Fixed::operator=(Fixed const & rhs)
+Fixed &	Fixed::operator=(const Fixed& rhs)
 {
 	if (this != &rhs)
 		this->_fixed_point = rhs.getRawBits();
@@ -51,13 +54,17 @@ Fixed &	Fixed::operator=(Fixed const & rhs)
 	return *this;
 }
 
+
+// FUNCTIONS *************************************************** FUNCTIONS
+
+
 int		Fixed::getRawBits() const
 {
 	// std::cout << "getRawBits member function called" << std::endl;
 	return (this->_fixed_point);
 }
 
-void	Fixed::setRawBits(int const raw)
+void	Fixed::setRawBits(const int raw)
 {
 	// std::cout << "setRawBits member function called" << std::endl;
 	this->_fixed_point = raw;
@@ -73,9 +80,94 @@ int		Fixed::toInt() const
 	return (this->_fixed_point / (1 << this->_fractional_bits));
 }
 
+
+// OVERLOADS *************************************************** OVERLOADS
+
+
+bool	Fixed::operator<(const Fixed& rhs) const
+{
+	if (this->toFloat() < rhs.toFloat())
+		return (true);
+	return (false);
+}
+
+bool	Fixed::operator>(const Fixed& rhs) const
+{
+	return (rhs._fixed_point < this->_fixed_point);
+}
+
+bool	Fixed::operator<=(const Fixed& rhs) const
+{
+	return !(this->_fixed_point > rhs._fixed_point);
+}
+
+bool	Fixed::operator>=(const Fixed& rhs) const
+{
+	return !(this->_fixed_point < rhs._fixed_point);
+}
+
+bool	Fixed::operator==(const Fixed& rhs) const
+{
+	return (this->_fixed_point == rhs._fixed_point);
+}
+
+bool	Fixed::operator!=(const Fixed& rhs) const
+{
+	return !(this->_fixed_point == rhs._fixed_point);
+}
+
+Fixed	Fixed::operator+(const Fixed& rhs) const
+{
+	return (this->toFloat() + rhs.toFloat());
+}
+
+Fixed	Fixed::operator-(const Fixed& rhs) const
+{
+	return (this->toFloat() - rhs.toFloat());
+}
+
+Fixed	Fixed::operator*(const Fixed& rhs) const
+{
+	return (this->toFloat() * rhs.toFloat());
+}
+
+Fixed	Fixed::operator/(const Fixed& rhs) const
+{
+	return (this->toFloat() / rhs.toFloat());
+}
+
+Fixed&	Fixed::operator++() // prefix incrementation
+{
+	this->_fixed_point++;
+	return (*this); // return new value by reference
+}
+
+Fixed&	Fixed::operator--() // prefix decrementation
+{
+	this->_fixed_point--;
+	return (*this); // return new value by reference
+}
+
+Fixed	Fixed::operator++(int) // postfix incrementation
+{
+	Fixed tmp = *this;
+	operator++();
+	return (tmp);
+}
+
+Fixed	Fixed::operator--(int) // postfix decrementation
+{
+	Fixed tmp = *this;
+	operator--();
+	return (tmp);
+}
+
+// STATICS ***************************************************** STATICS
+
+
 const int	Fixed::_fractional_bits = 8;
 
-std::ostream & operator<<(std::ostream & o, Fixed const & rhs)
+std::ostream & operator<<(std::ostream & o, const Fixed& rhs)
 {
 	o << rhs.toFloat();
 	return (o);
