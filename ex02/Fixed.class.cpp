@@ -6,7 +6,7 @@
 /*   By: vfuhlenb <vfuhlenb@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:53:29 by vfuhlenb          #+#    #+#             */
-/*   Updated: 2023/03/11 14:04:05 by vfuhlenb         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:25:58 by vfuhlenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,34 @@ int		Fixed::toInt() const
 	return (this->_fixed_point / (1 << this->_fractional_bits));
 }
 
+Fixed&			Fixed::max(Fixed& f1, Fixed& f2)
+{
+	if (f1 < f2)
+		return (f2);
+	return (f1);
+}
+
+const Fixed&	Fixed::max(const Fixed& f1, const Fixed& f2)
+{
+	if (f1 < f2)
+		return (f2);
+	return (f1);
+}
+
+Fixed&			Fixed::min(Fixed& f1, Fixed& f2)
+{
+	if (f1 > f2)
+		return (f2);
+	return (f1);
+}
+
+const Fixed&	Fixed::min(const Fixed& f1, const Fixed& f2)
+{
+	if (f1 > f2)
+		return (f2);
+	return (f1);
+}
+
 
 // OVERLOADS *************************************************** OVERLOADS
 
@@ -133,6 +161,11 @@ Fixed	Fixed::operator*(const Fixed& rhs) const
 
 Fixed	Fixed::operator/(const Fixed& rhs) const
 {
+	if (rhs.getRawBits() == 0)
+	{
+		std::cout << "division by zero" << std::endl;
+		exit(1);
+	}
 	return (this->toFloat() / rhs.toFloat());
 }
 
